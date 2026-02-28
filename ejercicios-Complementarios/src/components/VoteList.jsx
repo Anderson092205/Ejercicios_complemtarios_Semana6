@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import VoteOption from '../components/VoteOption';
+import VoteOption from './VoteOption';
 
 const VoteList = () => {
-  // Estado para los votos de cada tecnología [cite: 28]
+  // Estado inicial: React, Vue y Angular en CERO [cite: 28]
   const [votes, setVotes] = useState({
     React: 0,
     Vue: 0,
     Angular: 0
   });
 
-  // Cálculo del total de personas que han votado [cite: 13]
+  // Cálculo del total acumulado de los 3 [cite: 13, 14]
   const totalVotes = votes.React + votes.Vue + votes.Angular;
 
-  // Función para manejar el incremento de votos [cite: 29]
+  // Función para incrementar votos individuales [cite: 29]
   const handleVote = (tech) => {
     setVotes({
       ...votes,
@@ -20,42 +20,54 @@ const VoteList = () => {
     });
   };
 
-  // Requerimiento: Botón de "Reiniciar votos" para volver a cero [cite: 17, 26, 30]
+  // Función para reiniciar todo a cero [cite: 17, 30]
   const resetVotes = () => {
     setVotes({ React: 0, Vue: 0, Angular: 0 });
   };
 
-  // Función para calcular el porcentaje individual 
+  // Función para calcular porcentaje
   const getPercentage = (count) => {
-    if (totalVotes === 0) return 0;
-    return ((count / totalVotes) * 100).toFixed(1);
+    return totalVotes === 0 ? 0 : ((count / totalVotes) * 100).toFixed(1);
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
-      <h2>Sistema de Votación UDB</h2>
-      {/* Visualización de cantidad de personas que han votado [cite: 13] */}
-      <p>Total de votos registrados: <strong>{totalVotes}</strong></p>
+    <div style={{ maxWidth: '500px', margin: '0 auto', padding: '20px', textAlign: 'center' }}>
+      <h2 style={{ color: 'white' }}>¿Qué Framework Prefieren como desarrollador?</h2>
+      
+      {}
+      <div style={{ 
+        backgroundColor: '#333', 
+        color: '#fff', 
+        padding: '10px', 
+        borderRadius: '5px', 
+        marginBottom: '20px' 
+      }}>
+        Total de personas que han votado: <strong>{totalVotes}</strong>
+      </div>
 
       <div className="options-container">
-        {/* Lista de VoteOption  */}
+        {/* Pasamos tanto el porcentaje como el conteo individual a cada componente */}
         <VoteOption 
           name="React" 
+          count={votes.React}
           percentage={getPercentage(votes.React)} 
           onVote={() => handleVote('React')} 
         />
         <VoteOption 
           name="Vue" 
+          count={votes.Vue}
           percentage={getPercentage(votes.Vue)} 
           onVote={() => handleVote('Vue')} 
         />
         <VoteOption 
           name="Angular" 
+          count={votes.Angular}
           percentage={getPercentage(votes.Angular)} 
           onVote={() => handleVote('Angular')} 
         />
       </div>
 
+      {/* Botón de reiniciar [cite: 17, 26] */}
       <button 
         onClick={resetVotes} 
         style={{
@@ -70,7 +82,7 @@ const VoteList = () => {
           fontWeight: 'bold'
         }}
       >
-        Reiniciar votos
+        Reiniciar todos los votos
       </button>
     </div>
   );
