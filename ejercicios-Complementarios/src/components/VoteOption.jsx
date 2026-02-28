@@ -1,27 +1,30 @@
 import React from 'react';
 
-// Props: nombre, porcentaje y la función para emitir el voto
-const VoteOption = ({ name, percentage, onVote }) => {
+const VoteOption = ({ name, percentage, count, onVote }) => {
   return (
     <div style={{
       border: '1px solid #ddd',
       padding: '15px',
       margin: '10px 0',
       borderRadius: '8px',
-      backgroundColor: '#f9f9f9',
+      backgroundColor: '#ffffff',
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      alignItems: 'center',
+      color: '#333' // Asegura que el texto sea visible
     }}>
-      <div>
-        <h3 style={{ margin: 0 }}>{name}</h3>
-        {/* Requerimiento: Muestra el porcentaje de votos actuales  */}
-        <p style={{ margin: '5px 0 0 0', color: '#555' }}>
-          Votos: <strong>{percentage}%</strong>
+      <div style={{ textAlign: 'left' }}>
+        <h3 style={{ margin: 0, color: '#000' }}>{name}</h3>
+        {/* Mostramos el porcentaje y el conteo individual [cite: 22] */}
+        <p style={{ margin: '5px 0 0 0' }}>
+          Participación: <strong>{percentage}%</strong>
+        </p>
+        <p style={{ margin: '2px 0 0 0', fontSize: '0.85rem', color: '#666' }}>
+          Votos: {count}
         </p>
       </div>
       
-      {/* Requerimiento: Botón "Votar" que incrementa la opción [cite: 23] */}
+      {/* Botón de votar [cite: 23] */}
       <button 
         onClick={onVote}
         style={{
@@ -30,7 +33,8 @@ const VoteOption = ({ name, percentage, onVote }) => {
           color: 'white',
           border: 'none',
           borderRadius: '5px',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          fontWeight: 'bold'
         }}
       >
         Votar
